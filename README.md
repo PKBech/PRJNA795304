@@ -17,7 +17,7 @@ All downstream analysis loads phyloseq created in:
 - phylo_main_no_cont_NoOutliers.R
 
 The R environment "phylo_main_no_cont_NoOutliers.RData" is loaded into following scripts
-- alpha_161121.R (Table 1; Figure S1 and S2)
+- alpha_161121.R (Table 1; Figure S2)
 - Beta-diversity_030122.R (Table 1 and 2; Figure 1)
 - ANCOMBC_030122.R (Figure 2)
 - NetCoMi_030122.R (Table S1; Figure 3)
@@ -26,7 +26,7 @@ To determine the low abundant read cut-off we used
 - Filtration210921.R
 
 Absolute abundances of Phaeobacter spp. were analysed in
-- qPCR_121121.R
+- qPCR_121121.R (Table 1; Figure S1)
 
 
 
