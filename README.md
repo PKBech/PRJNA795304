@@ -1,1 +1,32 @@
-# PRJNA795304
+# Data and scripts to reproduce results from the manuscript with data in BioProject PRJNA795304
+
+### Data
+All data used in the study can be found in the folder: 'Data/'.
+
+Two files for the creation of the phyloseq object in the R script "phylo_main_no_cont_NoOutliers.R" 
+- ASV_table.txt created by the QIIME2 and DADA2 pipeline
+- metadata.txt all metadata explaining each sample
+
+One file for the statistical analysis of the qPCR
+- qPCR_040521_50ulelute.txt
+
+### Scripts
+All scripts used for analysis can be found in 'Rscripts/'. 
+
+All downstream analysis loads phyloseq created in: 
+- phylo_main_no_cont_NoOutliers.R
+
+The R environment "phylo_main_no_cont_NoOutliers.RData" is loaded into following scripts
+- alpha_161121.R (Figure S1 and S2)
+- Beta-diversity_030122.R (Figure 1)
+- ANCOMBC_030122.R (Figure 2)
+- NetCoMi_030122.R (Figure 3)
+
+To determine the low abundant read cut-off we used
+- Filtration210921.R
+
+Absolute abundances of Phaeobacter spp. were analysed in
+- qPCR_121121.R
+
+
+
