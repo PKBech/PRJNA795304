@@ -209,13 +209,14 @@ df_fig_SW_sum_dat_all_long$Day <- factor(df_fig_SW_sum_dat_all_long$Day, levels 
 
 
 #Biofilm Control set as REF ----
+#Subset to Biofilm by day
 phylo_main_no_cont_NoOutliers_Biofilm <- subset_samples(phylo_main_no_cont_NoOutliers_Genus_filter_noPhaeo, Environment=="Biofilm")
 phylo_main_no_cont_NoOutliers_Biofilm_day1 <- subset_samples(phylo_main_no_cont_NoOutliers_Biofilm, Day=="1")
 phylo_main_no_cont_NoOutliers_Biofilm_day4 <- subset_samples(phylo_main_no_cont_NoOutliers_Biofilm, Day=="4")
 phylo_main_no_cont_NoOutliers_Biofilm_day10 <- subset_samples(phylo_main_no_cont_NoOutliers_Biofilm, Day=="10")
 
 
-#Order Treatments so WT is the comparing group
+#Order Treatments so Control is the comparing group
 sample_data(phylo_main_no_cont_NoOutliers_Biofilm_day1)$Treatment <- factor(sample_data(phylo_main_no_cont_NoOutliers_Biofilm_day1)$Treatment, levels = c("Control", "WT", "dTDA"))
 sample_data(phylo_main_no_cont_NoOutliers_Biofilm_day4)$Treatment <- factor(sample_data(phylo_main_no_cont_NoOutliers_Biofilm_day4)$Treatment, levels = c("Control", "WT", "dTDA"))
 sample_data(phylo_main_no_cont_NoOutliers_Biofilm_day10)$Treatment <- factor(sample_data(phylo_main_no_cont_NoOutliers_Biofilm_day10)$Treatment, levels = c("Control", "WT", "dTDA"))
@@ -397,7 +398,7 @@ LogFoldCounts_sum_dat_all_long_dTDA %>%
   group_by(var, Treatment) %>% dplyr::summarise(Count = sum(Count)) 
 
 
-
+#Run everything again but with WT as reference group
 #Planktonic suspension WT set as REF ----
 phylo_main_no_cont_NoOutliers_SW <- subset_samples(phylo_main_no_cont_NoOutliers_Genus_filter_noPhaeo, Environment=="Planktonic suspension")
 phylo_main_no_cont_NoOutliers_SW_day1 <- subset_samples(phylo_main_no_cont_NoOutliers_SW, Day=="1")
@@ -574,22 +575,6 @@ df_fig_SW_sum_dat_all_long <- reshape(df_fig_SW_sum_dat_all, direction='long',
 df_fig_SW_sum_dat_all_long$Day <- factor(df_fig_SW_sum_dat_all_long$Day, levels = c("Day 1", "Day 4", "Day 10"))
 
 
-
-# 
-# 
-# 
-# 
-# rbind(df_fig_Biofilm_day1, df_fig_Biofilm_day4, df_fig_Biofilm_day10, df_fig_SW_day1, df_fig_SW_day4, df_fig_SW_day10) %>% filter(var!="Control") %>% filter(LogFoldChange<0) %>% dplyr::summarise(unique(taxon_id)) %>% dplyr::summarise(n())
-# rbind(df_fig_Biofilm_day1, df_fig_Biofilm_day4, df_fig_Biofilm_day10, df_fig_SW_day1, df_fig_SW_day4, df_fig_SW_day10) %>% filter(var!="Control") %>% filter(LogFoldChange>0) %>% dplyr::summarise(unique(taxon_id)) %>% dplyr::summarise(n())
-# 
-# 
-# rbind(df_fig_Biofilm_day1, df_fig_Biofilm_day4, df_fig_Biofilm_day10, df_fig_SW_day1, df_fig_SW_day4, df_fig_SW_day10) %>% group_by(var) %>% filter(LogFoldChange>0) %>% dplyr::summarise(unique(taxon_id)) %>% dplyr::summarise(n())
-# 
-# 
-# rbind(df_fig_Biofilm_day1, df_fig_Biofilm_day4, df_fig_Biofilm_day10, df_fig_SW_day1, df_fig_SW_day4, df_fig_SW_day10) %>% filter(LogFoldChange>0) %>% dplyr::summarise(unique(taxon_id)) %>% dplyr::summarise(n())
-# rbind(df_fig_Biofilm_day1, df_fig_Biofilm_day4, df_fig_Biofilm_day10, df_fig_SW_day1, df_fig_SW_day4, df_fig_SW_day10) %>% filter(LogFoldChange<0) %>% dplyr::summarise(unique(taxon_id)) %>% dplyr::summarise(n())
-# 
-
 df_fig_Biofilm_day1 %>% group_by(var) %>% filter(LogFoldChange>0) %>% dplyr::summarise(unique(taxon_id)) %>% dplyr::summarise(n())
 df_fig_Biofilm_day4 %>% group_by(var) %>% filter(LogFoldChange>0) %>% dplyr::summarise(unique(taxon_id)) %>% dplyr::summarise(n())
 df_fig_Biofilm_day10 %>% group_by(var) %>% filter(LogFoldChange>0) %>% dplyr::summarise(unique(taxon_id)) %>% dplyr::summarise(n())
@@ -600,7 +585,7 @@ df_fig_SW_day4 %>% group_by(var) %>% filter(LogFoldChange>0) %>% dplyr::summaris
 df_fig_SW_day10 %>% group_by(var) %>% filter(LogFoldChange>0) %>% dplyr::summarise(unique(taxon_id)) %>% dplyr::summarise(n())
 
 
-
+#Merge results from all days
 rbind(df_fig_Biofilm_day1, df_fig_Biofilm_day4, df_fig_Biofilm_day10) %>% group_by(var) %>% filter(LogFoldChange<0) %>% dplyr::summarise(unique(taxon_id)) %>% dplyr::summarise(n())
 
 
@@ -612,7 +597,6 @@ rbind(df_fig_Biofilm_day1, df_fig_Biofilm_day4, df_fig_Biofilm_day10) %>% group_
 
 
 #Biofilm WT set as REF  ----
-
 phylo_main_no_cont_NoOutliers_Biofilm <- subset_samples(phylo_main_no_cont_NoOutliers_Genus_filter_noPhaeo, Environment=="Biofilm")
 phylo_main_no_cont_NoOutliers_Biofilm_day1 <- subset_samples(phylo_main_no_cont_NoOutliers_Biofilm, Day=="1")
 phylo_main_no_cont_NoOutliers_Biofilm_day4 <- subset_samples(phylo_main_no_cont_NoOutliers_Biofilm, Day=="4")
@@ -698,7 +682,7 @@ colnames(df_fig2_Biofilm_day4)[-1] = paste0(colnames(df_fig2_Biofilm_day4)[-1], 
 colnames(df_fig1_Biofilm_day4) <- sub("Treatment", "", colnames(df_fig1_Biofilm_day4))
 colnames(df_fig2_Biofilm_day4) <- sub("Treatment", "", colnames(df_fig2_Biofilm_day4))
 
-
+###### DATAFRAME USED IN NETWORK ANALYSIS IN "NetCoMi_030122.R" SCRIPT############
 #Save df_fig_Biofilm_day4 for input for later network combined analysis in NetCoMi_030122.R
 # save.image("ANCOMBC_030122")  # save workspace to disk
 # rm(list=ls()) # remove everything from workspace
@@ -873,7 +857,7 @@ phylo_main_no_cont_NoOutliers_SW_day4_noPhaeo <- subset_taxa(phylo_main_no_cont_
 
 
 
-#SW
+#Planktonic suspension 
 #Gloom/aggregate 
 
 
@@ -1115,7 +1099,7 @@ phylo_main_no_cont_NoOutliers_SW_day4_noPhaeo <- subset_taxa(phylo_main_no_cont_
 #Remove low abundant taxa
 #phylo_main_no_cont_NoOutliers_SW_day4_noPhaeo <- 
 
-#SW
+#Planktonic suspension
 #Gloom/aggregate 
 library(microbiome)
 library(ANCOMBC)
@@ -1334,11 +1318,6 @@ Figure_2B <- df_fig_day4_ANCOMBC_Final %>% filter(LogFoldChange!=0) %>%
 # dev.off()
 
 #FINAL Figure 2: A and 2B merged in one plot ----
-
-
-# pdf(file = "NMDS_noPhaeo.pdf",   # The directory you want to save the file in
-#     width = 8.3, # The width of the plot in inches
-#     height = 9.7) # The height of the plot in inches
 
 
 Figure_2B_1 <- plot_grid(NULL,Figure_2B + theme(legend.position = "bottom", text = element_text(size=10)), 
