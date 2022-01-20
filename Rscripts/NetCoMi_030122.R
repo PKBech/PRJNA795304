@@ -16,7 +16,7 @@ library(magick)
 load('phylo_main_no_cont_NoOutliers.RData')
 #For saving time load in the netComp comparisons with 1000 permutations
 load('netcomp_WTDelta_SparCC_ALL_COMP_100_1000L_221021.RData')
-#load('NetCoMi270921_permuted.RData')
+
 
 
 #Aggregate to genus level
@@ -31,7 +31,7 @@ phylo_main_no_cont_NoOutliers_genus_Biofilm_day1 <- subset_samples(phylo_main_no
 #Divide phyloseq object into each sample pool
 phylo_main_no_cont_NoOutliers_genus_Biofilm_day1_split <- metagMisc::phyloseq_sep_variable(phylo_main_no_cont_NoOutliers_genus_Biofilm_day1, "Treatment") 
 
-
+#Construct correlation matrix 
 net_WTdTDA_SparCC_Biofilm_day1_100 <- netConstruct(data = phylo_main_no_cont_NoOutliers_genus_Biofilm_day1_split$WT, #Samples from the WT treatment at day 1 for the Biofilm
                                                     data2 = phylo_main_no_cont_NoOutliers_genus_Biofilm_day1_split$dTDA, #Samples from the dTDA treatment at day 1 for the Biofilm
                                                     measure = "sparcc",  #Correlation method
@@ -41,13 +41,13 @@ net_WTdTDA_SparCC_Biofilm_day1_100 <- netConstruct(data = phylo_main_no_cont_NoO
                                                     sparsMethod = "threshold", thresh = 0.6, #Filter all edges with strength below 0.6
                                                     dissFunc = "signed")
 
-
+#Analyze network
 props_net_WTdTDA_SparCC_Biofilm_day1_100_0.6 <- netAnalyze(net_WTdTDA_SparCC_Biofilm_day1_100, clustMethod = "cluster_fast_greedy",
-                                                            hubQuant = 0.95, hubPar = c("degree", "between", "closeness"))
+                                                             hubQuant = 0.95, hubPar = c("eigenvector"))
 
 
 
-
+#Extract summary of top 5 nodes and their network scores 
 summary(props_net_WTdTDA_SparCC_Biofilm_day1_100_0.6, showCentr = "all",  numbNodes = 5L, digits = 5L,
         groupNames = c("WT","dTDA")) 
 
@@ -118,20 +118,14 @@ summary(props_net_WTdTDA_SparCC_Biofilm_day1_100_0.6, showCentr = "all",  numbNo
 
 # dev.off()
 
-### Comparing the sample similarity networks
-#?netCompare
 
-
+#Network comparison analysis with 1000 permutations
 # netcomp_WTdTDA_SparCC_Biofilm_day1_100_1000L_0.6 <- netCompare(props_net_WTdTDA_SparCC_Biofilm_day1_100_0.6, nPerm = 1000L,
 #                                                                 permTest = TRUE, cores = 2L, 
 #                                                                 storeAssoPerm = FALSE)
 
-
-#load('NetCoMi_netcomp_WTdTDA_SparCC_Biofilm_day1_100_0.6_1000L_161021.RData')
-
-#netcomp_WTdTDA_SparCC_Biofilm_day1_100_1000L_0.6$pvalDiffGlobalLCC$pvalavPath <- 1
-
-summary(netcomp_WTdTDA_SparCC_Biofilm_day1_100_1000L_0.6,  groupNames = c("WT","dTDA"), numbNodes = 25L  ) #
+#summeray of the top 25 nodes with highest network scores and the respective p-values
+#summary(netcomp_WTdTDA_SparCC_Biofilm_day1_100_1000L_0.6,  groupNames = c("WT","dTDA"), numbNodes = 25L  ) #
 
 #P. inhibens OTU sum of (+/-) edge connections
 assomat_WT_SparCC_Biofilm_day1 <- net_WTdTDA_SparCC_Biofilm_day1_100$assoMat1 #WT
@@ -162,6 +156,7 @@ phylo_main_no_cont_NoOutliers_genus_SW_day1 <- subset_samples(phylo_main_no_cont
 phylo_main_no_cont_NoOutliers_genus_SW_day1_split <- metagMisc::phyloseq_sep_variable(phylo_main_no_cont_NoOutliers_genus_SW_day1, "Treatment") 
 
 
+#Construct correlation matrix 
 net_WTdTDA_SparCC_SW_day1_100 <- netConstruct(data = phylo_main_no_cont_NoOutliers_genus_SW_day1_split$WT,
                                                     data2 = phylo_main_no_cont_NoOutliers_genus_SW_day1_split$dTDA,
                                                     measure = "sparcc",
@@ -171,9 +166,9 @@ net_WTdTDA_SparCC_SW_day1_100 <- netConstruct(data = phylo_main_no_cont_NoOutlie
                                                     sparsMethod = "threshold", thresh = 0.6,
                                                     dissFunc = "signed")
 
-
+#Analyze network
 props_net_WTdTDA_SparCC_SW_day1_100_0.6 <- netAnalyze(net_WTdTDA_SparCC_SW_day1_100, clustMethod = "cluster_fast_greedy",
-                                                            hubQuant = 0.95, hubPar = c("degree", "between", "closeness"))
+                                                             hubQuant = 0.95, hubPar = c("eigenvector"))
 
 
 
@@ -244,22 +239,11 @@ summary(props_net_WTdTDA_SparCC_SW_day1_100_0.6, showCentr = "all",  numbNodes =
 
 # dev.off()
 
-### Comparing the sample similarity networks
-#?netCompare
 
-# netcomp_WTdTDA_spear_SW_day1_1000_1000L <- netCompare(props_net_WTdTDA_SparCC_SW_day1_1000, nPerm = 1000L,
-#                                                        permTest = TRUE, cores = 2L, 
-#                                                        storeAssoPerm = FALSE)
-
+#Network comparison analysis with 1000 permutations
 #netcomp_WTdTDA_SparCC_SW_day1_100_1000L_0.6 <- netCompare(props_net_WTdTDA_SparCC_SW_day1_100_0.6, nPerm = 1000L,
 #                                                                 permTest = TRUE, cores = 2L, 
 #                                                                 storeAssoPerm = FALSE)
-
-
-#load('NetCoMi_netcomp_WTdTDA_SparCC_SW_day1_100_0.6_1000L_161021.RData')
-netcomp_WTdTDA_SparCC_SW_day1_100_1000L_0.6$pvalDiffGlobalLCC$pvalavPath <- 1
-
-summary(netcomp_WTdTDA_SparCC_SW_day1_100_1000L_0.6,  groupNames = c("WT","dTDA"), numbNodes = 25L  ) #
 
 
 #P. inhibens OTU sum of (+/-) edge connections
@@ -338,7 +322,7 @@ plot_WTdTDA_SparCC_Biofilm_day4_100 <- plot(props_net_WTdTDA_SparCC_Biofilm_day4
                                              mar = c(2,2,3,1), set.seed(1000))
 
 
-
+#Remove all node names aside from P. inhibens OTU
 labels1 <- plot_WTdTDA_SparCC_Biofilm_day4_100$labels$labels1
 labels2 <- plot_WTdTDA_SparCC_Biofilm_day4_100$labels$labels2
 
@@ -353,28 +337,29 @@ nodeNames[[2]]=ifelse(nodeNames[[2]]!="Phaeobacter_inhibens", "",nodeNames[[2]])
 nodeNames[[1]]=ifelse(nodeNames[[1]]=="Phaeobacter_inhibens", "P. inhibens OTU",nodeNames[[1]])
 nodeNames[[2]]=ifelse(nodeNames[[2]]=="Phaeobacter_inhibens", "P. inhibens OTU",nodeNames[[2]])
 
-
+#Color nodes by their class
 nodecol1 <- plot_WTdTDA_SparCC_Biofilm_day4_100$labels$labels1
 #nodecol2 <- plot_WTdTDA_SparCC_Biofilm_day4_100$labels$labels2
 nodecol1_dat <- as.data.frame(nodecol1)
 colnames(nodecol1_dat) <- "Genus"
 
-dim(nodecol1_dat)
-length(nodecol1)
-
-
+#Extract Genus names from phyloseq object
 tax_order <- as.data.frame(tax_table(phylo_main_no_cont_NoOutliers_genus_Biofilm_day4))
 
+#and match with node names in the "nodecol1_dat"
 nodecol1_dat_all <- left_join(nodecol1_dat, tax_order, by ='Genus')
 dim(nodecol1_dat_all)
 
+#Subset to class
 nodecol_order <- nodecol1_dat_all$Class
 
 names(nodecol_order) <- nodecol1
 
+#Rename NA's to "Unclassified
 nodecol_order=ifelse(is.na(nodecol_order), "Unclassified", nodecol_order)
 unique(nodecol_order)
 
+#Pick color theme
 Paired_colors <- brewer.pal(n = 12, name = "Paired")
 OrRd_colors <- brewer.pal(n = 9, name = "OrRd")
 PuRd_colors <- brewer.pal(n = 6, name = "PuRd")[3:6]
@@ -400,15 +385,8 @@ Paired_colors_expand_norm <- (c(Sea_Sunset_colors,Tropical_colors,Mountain_color
 show_col(Paired_colors_expand_norm)
 #show_col(brewer.pal(n = 12, name = "Paired"))
 
+#Order the Class in the correct order
 
-# nodecol_order <- factor(nodecol_order, levels=c("Actinobacteria","Flavobacteriia",
-#                                                 "Planctomycetia","Sphingobacteriia",
-#                                                 "Alphaproteobacteria", "Caldilineae", 
-#                                                 "Opitutae","Deinococci",
-#                                                 "Gammaproteobacteria", "Cytophagia", 
-#                                                 "Unclassified","Holophagae", "Chlamydiia", "Phycisphaerae",
-#                                                 "Betaproteobacteria", "Deltaproteobacteria", "Epsilonproteobacteria", 
-#                                                 "Verrucomicrobiae"))
 nodecol_order <- factor(nodecol_order, levels=c("Flavobacteriia","Gammaproteobacteria",
                                                 "Cytophagia","Alphaproteobacteria",
                                                 "Actinobacteria", "Sphingobacteriia",
@@ -476,7 +454,7 @@ legend(0, -3,  title = "Estimated correlation", title.adj=0,
 dev.off()
 
 
-  #P. inhibens OTU sum of (+/-) edge connections
+#P. inhibens OTU sum of (+/-) edge connections
 assomat_WT_SparCC_Biofilm_day4 <- net_WTdTDA_SparCC_Biofilm_day4_100$assoMat1 #WT
 assomat_dTDA_SparCC_Biofilm_day4 <- net_WTdTDA_SparCC_Biofilm_day4_100$assoMat2 #dTDA
 
@@ -493,43 +471,8 @@ assomat_dTDA_SparCC_Biofilm_day4_Phaeobacter_clean%>%mutate(positive=sum(Phaeoba
 
 
 
-
-
-# pdf(file = "props_net_WTdTDA_SparCC_Biofilm_day4_100.pdf",   # The directory you want to save the file in
-#     width = 8, # The width of the plot in inches
-#     height = 5.5) # The height of the plot in inches
-# 
-# 
-# 
-# plot(props_net_WTdTDA_SparCC_Biofilm_day4_100_0.6, 
-#      sameLayout = FALSE, 
-#      labels = nodeNames,
-#      nodeColor = "feature", featVecCol = nodecol_order, colorVec = Paired_colors_expand,
-#      nodeSize = "eigenvector",
-#      edgeWidth = 0.3,
-#      # edgeFilter = "highestWeight",
-#      # edgeFilterPar = 300,
-#      borderCol = "gray40", 
-#      title1 = "Network on Genus level with spearman correlations", 
-#      showTitle = TRUE,
-#      groupNames = c("WT","dTDA"),
-#      cexTitle = 1, 
-#      #labelLength = 15,
-#      #labelPattern = c(120,"'",4),
-#      labelScale = FALSE, repulsion = 0.9, 
-#      shortenLabels = "none", 
-#      #charToRm = "Bacteria_",
-#      nodeSizeSpread = 3, nodeTransp = 10, edgeTransp = 50,
-#      cexNodes = 1, edgeTranspLow = 0,
-#      hubBorderWidth = 2, 
-#      mar = c(2,2,3,1), set.seed(1000))
-# 
-# 
-# dev.off()
-
-### Comparing the sample similarity networks
-
-# #netcomp_WTdTDA_SparCC_Biofilm_day4_100_1000L_0.6 <- netCompare(props_net_WTdTDA_SparCC_Biofilm_day4_100_0.6, nPerm = 1000L,
+### Network comparison analysis with 1000 permutations
+# netcomp_WTdTDA_SparCC_Biofilm_day4_100_1000L_0.6 <- netCompare(props_net_WTdTDA_SparCC_Biofilm_day4_100_0.6, nPerm = 1000L,
 #                                                             permTest = TRUE, cores = 2L, 
 #                                                             storeAssoPerm = FALSE)
 
@@ -622,15 +565,12 @@ summary(props_net_WTdTDA_SparCC_SW_day4_100, showCentr = "all",  numbNodes = 5L,
 
 # dev.off()
 
-### Comparing the sample similarity networks
-
-# #netcomp_WTdTDA_SparCC_SW_day4_100_1000L_0.6 <- netCompare(props_net_WTdTDA_SparCC_SW_day4_100, nPerm = 1000L,
+### Network comparison analysis with 1000 permutations
+# netcomp_WTdTDA_SparCC_SW_day4_100_1000L_0.6 <- netCompare(props_net_WTdTDA_SparCC_SW_day4_100, nPerm = 1000L,
 #                                                        permTest = TRUE, cores = 2L, 
 #                                                        storeAssoPerm = FALSE)
 # 
 
-
-summary(netcomp_WTdTDA_SparCC_SW_day4_100_1000L_0.6,  groupNames = c("WT","dTDA"), numbNodes = 5L, digits = 3L,) #
 
 #P. inhibens OTU sum of (+/-) edge connections
 assomat_WT_SparCC_SW_day4 <- net_WTdTDA_SparCC_SW_day4_100$assoMat1 #WT
@@ -744,16 +684,11 @@ summary(props_net_WTdTDA_SparCC_Biofilm_day10_100_0.6, showCentr = "all",  numbN
 # dev.off()
 
 
-### Comparing the sample similarity networks
-
+### Network comparison analysis with 1000 permutations
 # netcomp_WTdTDA_SparCC_Biofilm_day10_100_1000L_0.6 <- netCompare(props_net_WTdTDA_SparCC_Biofilm_day10_100_0.6, nPerm = 1000L,
 #                                                                 permTest = TRUE, cores = 2L, 
 #                                                                 storeAssoPerm = FALSE)
 # 
-
-
-summary(netcomp_WTdTDA_SparCC_Biofilm_day10_100_1000L_0.6,  groupNames = c("WT","dTDA"), numbNodes = 25L  ) #
-
 
 
 #P. inhibens OTU sum of (+/-) edge connections
@@ -773,7 +708,7 @@ assomat_dTDA_SparCC_Biofilm_day10_Phaeobacter_clean%>%mutate(positive=sum(Phaeob
 
 
 
-#SW Day 10: Comparing WT and dTDA network (th = 0.6) -----
+#Planktonic suspension Day 10: Comparing WT and dTDA network (th = 0.6) -----
 
 phylo_main_no_cont_NoOutliers_genus_SW <- subset_samples(phylo_main_no_cont_NoOutliers_genus, Environment=="Planktonic suspension")
 phylo_main_no_cont_NoOutliers_genus_SW_day10 <- subset_samples(phylo_main_no_cont_NoOutliers_genus_SW, Day=="10")
@@ -867,7 +802,7 @@ summary(props_net_WTdTDA_SparCC_SW_day10_100_0.6, showCentr = "all",  numbNodes 
 #                                                                  permTest = TRUE, cores = 2L, 
 #                                                                  storeAssoPerm = FALSE)
 # 
-summary(netcomp_WTdTDA_SparCC_SW_day10_100_1000L_0.6,  groupNames = c("WT","dTDA"), numbNodes = 25L  ) #
+
 
 
 #P. inhibens OTU sum of (+/-) edge connections
@@ -884,25 +819,6 @@ assomat_dTDA_SparCC_SW_day10_Phaeobacter <- as.data.frame(assomat_dTDA_SparCC_SW
 assomat_dTDA_SparCC_SW_day10_Phaeobacter_clean <- filter_all(assomat_dTDA_SparCC_SW_day10_Phaeobacter, any_vars(. != 0 & . != 1))
 
 assomat_dTDA_SparCC_SW_day10_Phaeobacter_clean%>%mutate(positive=sum(Phaeobacter_inhibens>0),negative=sum(Phaeobacter_inhibens<0))
-
-
-# Clean up env -----
-#Clean up environment and save all comparisons
-
-# rm(list=ls()) # remove everything from workspace
-# tmp.env <- new.env() # create a temporary environment
-# load("NetCoMi_netcomp_WTdTDA_SparCC_SW_day10_100_0.6_1000L_161021.RData", envir=tmp.env) # load workspace into temporary environment
-# netcomp_WTdTDA_SparCC_Biofilm_day1_100_1000L_0.6 <- get("netcomp_WTdTDA_SparCC_Biofilm_day1_100_1000L_0.6", pos=tmp.env) # get the objects you need into your globalenv()
-# netcomp_WTdTDA_SparCC_SW_day1_100_1000L_0.6 <- get("netcomp_WTdTDA_SparCC_SW_day1_100_1000L_0.6", pos=tmp.env) # get the objects you need into your globalenv()
-# netcomp_WTdTDA_SparCC_Biofilm_day4_100_1000L_0.6 <- get("netcomp_WTdTDA_SparCC_Biofilm_day4_100_1000L_0.6", pos=tmp.env) # get the objects you need into your globalenv()
-# netcomp_WTdTDA_SparCC_SW_day4_100_1000L_0.6 <- get("netcomp_WTdTDA_SparCC_SW_day4_100_1000L", pos=tmp.env) # get the objects you need into your globalenv()
-# netcomp_WTdTDA_SparCC_Biofilm_day10_100_1000L_0.6 <- get("netcomp_WTdTDA_SparCC_Biofilm_day10_100_1000L_0.6", pos=tmp.env) # get the objects you need into your globalenv()
-# netcomp_WTdTDA_SparCC_SW_day10_100_1000L_0.6 <- get("netcomp_WTdTDA_SparCC_SW_day10_100_1000L_0.6", pos=tmp.env) # get the objects you need into your globalenv()
-# 
-# #x <- tmp.env$x # equivalent to previous line
-# rm(tmp.env) # remove the temporary environment to free up memory
-# 
-# save.image(file='netcomp_WTdTDA_SparCC_ALL_COMP_100_1000L_221021.RData')
 
 ### --- Summary comparisons at all times ----
 #Day 1
@@ -953,7 +869,7 @@ assomat_net_dTDA_SparCC_Biofilm_day4_100_Phaeobacter <- data.frame(assomat_net_d
 assomat_dTDA_SparCC_Biofilm_day4_100_Phaeobacter_clean <- filter_all(assomat_net_dTDA_SparCC_Biofilm_day4_100_Phaeobacter, any_vars(. != 0& . != 1))
 
 
-#Day 4 SW
+#Day 4 Planktonic suspension
 assomat_net_WT_SparCC_SW_day4_100 <- net_WTdTDA_SparCC_SW_day4_100$assoMat1 #WT
 assomat_net_dTDA_SparCC_SW_day4_100 <- net_WTdTDA_SparCC_SW_day4_100$assoMat2 #dTDA
 
@@ -976,7 +892,7 @@ assomat_dTDA_SparCC_Biofilm_day10_100_Phaeobacter_clean <- filter_all(assomat_ne
 
 
 
-#Day 10 SW
+#Day 10 Planktonic suspension
 assomat_net_WT_SparCC_SW_day10_100 <- net_WTdTDA_SparCC_SW_day10_100$assoMat1 #WT
 assomat_net_dTDA_SparCC_SW_day10_100 <- net_WTdTDA_SparCC_SW_day10_100$assoMat2 #dTDA
 
@@ -1097,6 +1013,7 @@ degree_Phaeobacter_tax_Biofilm_Day4 <- degree_Phaeobacter_tax %>% filter(Day=="4
 
 
 #Join LogFC size from ANCOM analysis and plot as size
+#Load in the 
 load(file="df_fig1_Biofilm_day4")
 df_fig1_Biofilm_day4
 #Load df_fig1_Biofilm_day4 from ANCOM-BC analysis
