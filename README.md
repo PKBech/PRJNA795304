@@ -20,7 +20,7 @@ All downstream analysis loads phyloseq created in:
 The R environment "phylo_main_no_cont_NoOutliers.RData" is loaded into following scripts:
 - alpha_161121.R (Table 1; Figure S1)
 - Beta-diversity_030122.R (Table 1 and 2; Figure 2)
-- ANCOMBC_030122.R (Figure 3)
+- ANCOMBC_040422.R (Figure 3)
 - NetCoMi_030122.R (Table S1; Figure 4)
 
 To determine the low abundant read cut-off we used:
