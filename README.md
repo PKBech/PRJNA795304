@@ -7,7 +7,8 @@ Two files for the creation of the phyloseq object in the R script "phylo_main_no
 - ASV_table.txt created by the QIIME2 and DADA2 pipeline
 - metadata.txt all metadata explaining each sample
 
-One file for the statistical analysis of the qPCR
+Statistical analysis of the qPCR of the absolutte abundances and Phaeobacter spp. 
+- 16S_absolutte_qPCR_2.txt
 - qPCR_040521_50ulelute.txt
 
 ### Scripts
