@@ -29,7 +29,18 @@ To determine the low abundant read cut-off we used:
 Absolutte population and Phaeobacter spp. abundances
 - qPCR_040422.R (Table 1; Figure 1)
 
-![plot](./Figures/Figure_1.tiff)=250x250
+#Figure 1
+![plot](./Figures/Figure_1.tiff)
+
+#Figure 2
+![plot](./Figures/Figure_2.png)
+#Figure 3
+![plot](./Figures/Figure_3.tiff)
+#Figure 4
+![plot](./Figures/Figure_4.tiff)
+#Figure S1
+![plot](./Figures/Figure_S1.png)
+
 
 
 
