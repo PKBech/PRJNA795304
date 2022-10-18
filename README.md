@@ -17,21 +17,20 @@ All scripts used for analysis can be found in 'Rscripts/'.
 All downstream analysis loads phyloseq created in: 
 - phylo_main_no_cont_NoOutliers.R
 
-The R environment "phylo_main_no_cont_NoOutliers.RData" is loaded into following scripts:
-- alpha_161121.R (Table 1; Figure S1)
-- Beta-diversity_030122.R (Table 1 and 2; Figure 2)
-- ANCOMBC_040422.R (Figure 3)
-- NetCoMi_030122.R (Table S1; Figure 4)
+Low abundant read cut-off were analysed in "Filtration210921.R". 
 
-To determine the low abundant read cut-off we used:
-- Filtration210921.R
+The alpha-diversity analysis, including Table 1 and Figure S1 were created with "alpha_161121.R". 
+The beta-analysis including beta-dispersion, PERMANOVA (Table 1), postdoc pair-wise adonis (Table 2), scree and NMDS plots (Figure 2) were analysed in "Beta-diversity_131022.R"
+
+The differential analysis using the ANCOM-BC model testing comparing all groups were created with "ANCOMBC_040422.R" (Figure 3). 
+
+Network analysis comparing the WT and the dTDA microbiome of each day from both environments, respectively were carried out in "NetCoMi_030122.R" including Figure 4A. Positive and negative correlations between the P. inhibens OTU and other genera at day 4 in the biofilm were extracted from the NetComi constructed network WT and dTDA comparison and their respective LogFC changes (dertermined in "ANCOMBC_040422.R") were combined in Figure 4B. The netCompare function was used to calculate significant changes between the network scores (scores of betweenness, degree, closeness, and eigenvector centrality) between the WT and the dTDA networks constructed on samples from either the biofilm or the planktonic suspension at each day, respectively and to determine keystones. All network scores and p-values are summerized in Table S1. 
 
 Absolutte population and Phaeobacter spp. abundances
 - qPCR_040422.R (Table 1; Figure 1)
 
 # Figure 1
 ![plot](./Figures/Figure_1.tiff)
-
 # Figure 2
 ![plot](./Figures/Figure_2.png)
 # Figure 3
