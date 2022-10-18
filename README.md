@@ -26,8 +26,7 @@ The differential analysis using the ANCOM-BC model comparing all groups were cre
 
 Network analyses comparing the WT and the dTDA microbiome of each day from both environments, respectively were carried out in "NetCoMi_030122.R" including Figure 4A. Positive and negative correlations between the 'P. inhibens OTU' and other genera at day 4 in the biofilm were extracted from the NetComi constructed network WT and dTDA comparison and their respective LogFC changes (dertermined in "ANCOMBC_040422.R") were combined in Figure 4B. The netCompare function was used to calculate significant changes between the network scores (betweenness, degree, closeness, and eigenvector centrality) between the WT and the dTDA networks constructed on samples from either the biofilm or the planktonic suspension at each day, respectively and to determine keystones. All network scores and p-values were summerized in Table S1. 
 
-Absolutte population and Phaeobacter spp. abundances
-- qPCR_040422.R (Table 1; Figure 1)
+Absolutte population and Phaeobacter spp. abundances were analysed in "qPCR_040422.R" (Table 1; Figure 1)
 
 # Figure 1
 ![plot](./Figures/Figure_1.tiff)
