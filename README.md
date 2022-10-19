@@ -35,7 +35,7 @@ Absolutte population and Phaeobacter spp. abundances were analysed in "qPCR_0404
 # Figure 3
 ![plot](./Figures/Figure_3.tiff)
 # Figure 4
-![plot](./Figures/Figure_4.tiff)
+![plot](./Figures/Figure_4_181022.tiff)
 # Figure S1
 ![plot](./Figures/Figure_S1.png)
 
