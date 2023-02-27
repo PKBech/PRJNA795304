@@ -14,7 +14,7 @@ Statistical analysis of the qPCR of the absolutte population and Phaeobacter spp
 ### Scripts
 All scripts used for analysis can be found in 'Rscripts/'. 
 
-All downstream analysis loads phyloseq created in: 
+Pre-processing of the ASV table and rarefaction curves: 
 - phylo_main_no_cont_NoOutliers.R
 
 Low abundant read cut-off were analysed and determined in "Filtration210921.R". 
